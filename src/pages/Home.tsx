@@ -1,16 +1,34 @@
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import styled from 'styled-components';
+import { ScrollView, Button, View } from 'react-native';
+import ProductCard from '../components/ProductCard';
 
 const Home = ({navigation}: {navigation: any}) => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button 
-        title="Go to Product Page"
-        onPress={() => navigation.navigate('ProductPage')}
-      />
-    </View>
-  );
+    <Wrapper>
+        <Grid>
+            <Column> 
+                <ProductCard/>
+            </Column>
+        </Grid>
+    </Wrapper>
+);
 }
+
+const Wrapper = styled(ScrollView)`
+    width: 100%;
+    height: 100%;
+    backgroundColor: #F2F2F2;
+`;
+
+const Grid = styled(View)`
+    flexDirection: row;
+    flexWrap: wrap;
+`;
+
+const Column = styled(View)`
+    width: 46%;
+    margin: 2%;
+`;
 
 export default Home;
