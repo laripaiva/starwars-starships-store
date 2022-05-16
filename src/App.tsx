@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useFonts } from 'expo-font';
 import { ActivityIndicator } from 'react-native';
+import { Provider } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import store from './store';
 import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 import Basket from './pages/Basket';
@@ -21,13 +23,15 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen name="Home" component={Home}  options={{ title: 'Galáctica Starships' }}/>
         <Stack.Screen name="ProductPage" component={ProductPage} options={{ title: 'Galáctica Starships' }}/>
         <Stack.Screen name="Basket" component={Basket} options={{ title: 'Galáctica Starships' }}/>
         </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
