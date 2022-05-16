@@ -22,12 +22,13 @@ const initialState: Product = {
     url: ""
 };
 
+
 const product = createSlice({
     name: 'product',
     initialState,
     reducers: {
         selectProduct (state, action: PayloadAction<Product>) {
-            state = Object.assign(state, action.payload); 
+            state = Object.assign(state, action.payload);
         }, 
     }
 });
