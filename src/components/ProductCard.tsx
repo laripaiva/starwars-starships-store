@@ -1,16 +1,25 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
+import { Product } from "../utils/types";
 
-const ProductCard = () => {
+type Props = {
+    product: Product;
+    onClick: () => void;
+  };
+  
+const ProductCard = ( {product, onClick }: Props ) => {
     return (
-        <Card>
-            <ImageContainer>
-                <ImageUI source={require('../assets/starships/V-wing.png')}/>
-            </ImageContainer>
-            <Title>Calamari Cruiser</Title>
-            <Price>R$ 20,00</Price>
-        </Card>
+        <TouchableOpacity onPress={onClick}> 
+            <Card>
+                <ImageContainer>
+                    <ImageUI source={require('../assets/starships/V-wing.png')}/>
+                </ImageContainer>
+                <Title>{product.name}</Title>
+                <Price>${product.cost_in_credits}</Price>
+            </Card>
+        </TouchableOpacity>
+        
     );
 }
 

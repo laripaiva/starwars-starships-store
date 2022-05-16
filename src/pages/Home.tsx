@@ -1,18 +1,60 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, Button, View, ActivityIndicator } from 'react-native';
 import styled from 'styled-components';
-import { ScrollView, Button, View } from 'react-native';
 import ProductCard from '../components/ProductCard';
+import { getProductsFromServer } from '../services';
+import { Product } from "../utils/types";
+import { useAppDispatch } from '../hooks';
+import { selectProduct } from '../store/reducers/Product';
 
 const Home = ({navigation}: {navigation: any}) => {
-  return (
-    <Wrapper>
-        <Grid>
-            <Column> 
-                <ProductCard/>
-            </Column>
-        </Grid>
-    </Wrapper>
-);
+    const dispatch = useAppDispatch()
+    const [loading, setLoading] = useState<boolean>(false);
+    const [pagination, setPagination] = useState<number>(1);
+    const [products, setProducts] =  useState<Product[]>([]);
+
+    const incrementPagination = () => {
+        const totalOfPages = 4
+        if (pagination < totalOfPages) {
+            setPagination(pagination+1)
+        }
+    };
+
+    const loadProducts = async () => {
+        setLoading(true);
+        const result: Product[] = await getProductsFromServer(pagination);
+        setProducts(products.concat(result));
+        setLoading(false);
+    };
+
+    const goToProductPage = (product: Product) => {
+        dispatch(selectProduct(product));
+        navigation.navigate('ProductPage');
+    };
+
+    useEffect(() => {
+        loadProducts();
+    }, [pagination]);
+
+    if (loading) {
+        return <ActivityIndicator />;
+    }
+
+    return (
+        <Wrapper>
+            <Grid>
+                {products.map((product, index) => 
+                    <Column key={index}> 
+                        <ProductCard onClick={ () => goToProductPage(product) } product={product}/>
+                    </Column>
+                )}
+            </Grid>
+            <Button
+                title="Load"
+                onPress={() => incrementPagination()}
+            />
+        </Wrapper>
+    );
 }
 
 const Wrapper = styled(ScrollView)`
