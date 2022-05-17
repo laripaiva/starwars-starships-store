@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { getImagePath } from '../helpers/images';
 import { Product } from '../utils/types';
 import { getStandardProductPrice, formatPrice } from '../helpers/pricing';
 
@@ -12,12 +13,13 @@ type Props = {
 const ProductCard = ( {product, onClick }: Props ) => {
     const productPrice: number = getStandardProductPrice(); 
     const formattedPrice: string = formatPrice(productPrice);
+    const imagePath = getImagePath(product.name);
 
     return (
         <TouchableOpacity onPress={onClick}> 
             <Card>
                 <ImageContainer>
-                    <ImageUI source={require('../assets/starships/V-wing.png')}/>
+                    <ImageUI source={imagePath}/>
                 </ImageContainer>
                 <Title numberOfLines={1}>{product.name}</Title>
                 <Price numberOfLines={1}>{formattedPrice}</Price>
