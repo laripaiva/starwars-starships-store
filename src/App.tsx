@@ -23,8 +23,8 @@ const App = () => {
   }
   
   return (
-    <Provider store={store}>
-      	<NavigationContainer>
+	<Provider store={store}>
+		<NavigationContainer>
 			<Stack.Navigator 
 			screenOptions={{
 				headerStyle: {
@@ -57,8 +57,8 @@ const App = () => {
 				/>
 				<Stack.Screen name="Basket" component={Basket} options={{ title: 'cesta' }}/>
 			</Stack.Navigator>
-      	</NavigationContainer>
-    </Provider>
+		</NavigationContainer>
+	</Provider>
   );
 }
 
