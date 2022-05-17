@@ -36,23 +36,22 @@ const Home = ({navigation}: {navigation: any}) => {
         loadProducts();
     }, [pagination]);
 
-    if (loading) {
-        return <ActivityIndicator />;
-    }
 
     return (
-        <Wrapper>
-            <Grid>
-                {products.map((product, index) => 
-                    <Column key={index}> 
-                        <ProductCard onClick={ () => goToProductPage(product) } product={product}/>
-                    </Column>
-                )}
-            </Grid>
-            <Button
-                title="Load"
-                onPress={() => incrementPagination()}
-            />
+        <Wrapper onScrollEndDrag={() => incrementPagination()} >
+            {
+                products.length > 0 && (
+                    <Grid>
+                        {products.map((product, index) => 
+                            <Column key={index}> 
+                                <ProductCard onClick={ () => goToProductPage(product) } product={product}/>
+                            </Column>
+                        )}
+                    </Grid>
+                )
+            }
+                
+            { loading && (<ActivityIndicator />)}
         </Wrapper>
     );
 }
