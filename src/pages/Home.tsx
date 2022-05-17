@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Button, View, ActivityIndicator } from 'react-native';
+import { ScrollView, View, ActivityIndicator, Image } from 'react-native';
 import styled from 'styled-components';
 import ProductCard from '../components/ProductCard';
 import { getProductsFromServer } from '../services';
@@ -39,6 +39,9 @@ const Home = ({navigation}: {navigation: any}) => {
 
     return (
         <Wrapper onScrollEndDrag={() => incrementPagination()} >
+            <ImageContainer>
+                <ImageUI source={require('../assets/images/banner.png')}/>
+            </ImageContainer>
             {
                 products.length > 0 && (
                     <Grid>
@@ -60,6 +63,19 @@ const Wrapper = styled(ScrollView)`
     width: 100%;
     height: 100%;
     backgroundColor: #F2F2F2;
+`;
+
+const ImageContainer = styled(View)`
+    width: 100%;
+    height: 250px;
+    padding: 12px;
+    align-items: center;
+`;
+
+const ImageUI = styled(Image)`
+    width: 100%;
+    height: 100%;
+    resize-mode: contain;
 `;
 
 const Grid = styled(View)`

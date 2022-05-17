@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { IconButton } from 'react-native-paper';
 import { Provider } from 'react-redux'
 import { useFonts } from 'expo-font';
 import store from './store';
@@ -14,8 +15,6 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   let [fontsLoaded] = useFonts({
     'DaysOne-Regular': require('./assets/fonts/DaysOne-Regular.ttf'),
-    'Jura-Regular': require('./assets/fonts/Jura-Regular.ttf'),
-    'Jura-Bold': require('./assets/fonts/Jura-Bold.ttf'),
     'OpenSans': require('./assets/fonts/OpenSans.ttf'),
   });
 
@@ -36,8 +35,36 @@ const App = () => {
               fontFamily: 'DaysOne-Regular',
           },
         }}>
-        <Stack.Screen name="Home" component={Home}  options={{ title: 'GALACTICA SHOP' }} />
-        <Stack.Screen name="ProductPage" component={ProductPage} options={{ title: '' }}/>
+        <Stack.Screen 
+        	name="Home" 
+			component={Home}  
+			options={({ navigation }) => ({
+				title: 'GALACTICA SHOP',
+				headerRight: () => (
+					<IconButton
+						icon="basket"
+						color="#fff"
+						size={30}
+						onPress={() => navigation.navigate('Basket')}
+					/>
+				)
+			})}
+		/>
+        <Stack.Screen 
+        	name="ProductPage" 
+			component={ProductPage}  
+			options={({ navigation }) => ({
+				title: '',
+				headerRight: () => (
+					<IconButton
+						icon="basket"
+						color="#fff"
+						size={30}
+						onPress={() => navigation.navigate('Basket')}
+					/>
+				)
+			})}
+		/>
         <Stack.Screen name="Basket" component={Basket} options={{ title: 'CESTA' }}/>
         </Stack.Navigator>
       </NavigationContainer>
