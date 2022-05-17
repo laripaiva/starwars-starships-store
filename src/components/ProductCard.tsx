@@ -11,8 +11,8 @@ type Props = {
 };
 
 const ProductCard = ( {product, onClick }: Props ) => {
-    const productPrice: number = getStandardProductPrice(); 
-    const formattedPrice: string = formatPrice(productPrice);
+    const productPrice = getStandardProductPrice(); 
+    const formattedPrice = formatPrice(productPrice);
     const imagePath = getImagePath(product.name);
 
     return (
@@ -21,8 +21,10 @@ const ProductCard = ( {product, onClick }: Props ) => {
                 <ImageContainer>
                     <ImageUI source={imagePath}/>
                 </ImageContainer>
-                <Title numberOfLines={1}>{product.name}</Title>
-                <Price numberOfLines={1}>{formattedPrice}</Price>
+                <TextContainer>
+                    <Title numberOfLines={1}>{product.name}</Title>
+                    <Price numberOfLines={1}>{formattedPrice}</Price>
+                </TextContainer>
             </Card>
         </TouchableOpacity>
         
@@ -48,18 +50,19 @@ const ImageUI = styled(Image)`
     resize-mode: contain;
 `;
 
+const TextContainer = styled(View)`
+    margin-top: 8px;
+`;
+
 const Title = styled(Text)`
-    fontSize: 12px;
-    fontFamily: OpenSans;
-    fontWeight: bold;
+    font-size: 12px;
+    font-family: DaysOne-Regular;;
     color: #0D0D0D;
 `;
 
 const Price = styled(Text)`
-    fontSize: 14px;
-    fontFamily: OpenSans;
-    fontWeight: bold;
-    marginTop: 12px;
+    font-size: 16px;
+    font-family: OpenSans;
     color: #0D0D0D;
 `;
 
