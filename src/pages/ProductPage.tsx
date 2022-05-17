@@ -36,7 +36,7 @@ const ProductPage = ({navigation}: {navigation: any}) => {
         return true;
     };
     
-    const makeOrder = (product: Product) => {
+    const placeOrder = (product: Product) => {
         const cartItem: CartItem= {
             product: product, 
             quantity: 1,
@@ -70,7 +70,7 @@ const ProductPage = ({navigation}: {navigation: any}) => {
                 </Subtitle>              
             </TextContainer>
             <FooterContainer>
-                <BuyButton onClick={ () => makeOrder(product) }/>
+                <BuyButton onClick={ () => placeOrder(product) }/>
             </FooterContainer>
         </Wrapper>
     );
