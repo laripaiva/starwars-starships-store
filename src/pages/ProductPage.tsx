@@ -3,22 +3,50 @@ import { Image, ScrollView, Text, View } from 'react-native';
 import styled from 'styled-components';
 import { getImagePath } from '../helpers/images';
 import { getStandardProductPrice, formatPrice } from '../helpers/pricing';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { addOrderToCart } from '../store/reducers/Cart';
 import BuyButton from  '../components/BuyButton';
+import { Product, CartItem } from '../utils/types';
 
 const ProductPage = ({navigation}: {navigation: any}) => {
+    const dispatch = useAppDispatch();
     const product = useAppSelector((state) => state.product);
     const imagePath = getImagePath(product.name);
     const productPrice = getStandardProductPrice(); 
     const formattedPrice = formatPrice(productPrice);
 
+    const havePassengersInfo = (passengers: string) => {
+        if (passengers === 'unknown' || passengers === 'n/a' || passengers === '0') {
+            return false;
+        }
+        return true;
+    };
+    
+    const haveLengthInfo = (length: string) => {
+        if (length === 'unknown' || length === 'n/a' || length === '0') {
+            return false;
+        }
+        return true;
+    };
+    
+    const haveCrewInfo = (crew: string) => {
+        if (crew === 'unknown' || crew === 'n/a' || crew === '0') {
+            return false;
+        }
+        return true;
+    };
+    
+    const makeOrder = (product: Product) => {
+        const cartItem: CartItem= {
+            product: product, 
+            quantity: 1,
+        }
+        dispatch(addOrderToCart(cartItem));
+        navigation.navigate('Basket');
+    };
 
-    const havePassengersInfo = product.passengers === 'unknown' ? false : true;
-    const haveLengthInfo = product.length === 'unknown' ? false : true;
-    const haveCrewInfo = product.crew === 'unknown' ? false : true;
-
-    const addOrder = () => {
-        console.log('addOrder');
+    const formatNumber = (number: string) => {
+        return number.replace(/[^a-zA-Z0-9 ]/g, '');
     };
 
     return (
@@ -33,16 +61,16 @@ const ProductPage = ({navigation}: {navigation: any}) => {
                 </Subtitle>
                 <CustomText>
                     A {product.name} é uma espaçonave do universo Star Wars.
-                    { haveLengthInfo && ` Ela apresenta ${product.length} metros de comprimento.`}
-                    { havePassengersInfo && ` Sua capacidade de lotação é de ${product.passengers} passageiro(s).`}
-                    { haveCrewInfo && ` Além disso, é necessário cerca de ${product.crew} tripulante(s) para operar essa nave.`}
+                    { haveLengthInfo(product.length) && ` Ela apresenta ${formatNumber(product.length)} metros de comprimento.`}
+                    { havePassengersInfo(product.passengers) && ` Sua capacidade de lotação é de ${formatNumber(product.passengers)} passageiro(s).`}
+                    { haveCrewInfo(product.crew)  && ` Além disso, é necessário cerca de ${formatNumber(product.crew)} tripulante(s) para operar essa nave.`}
                 </CustomText>   
                 <Subtitle>
                     {formattedPrice}
                 </Subtitle>              
             </TextContainer>
             <FooterContainer>
-                <BuyButton onClick={ () => addOrder() }/>
+                <BuyButton onClick={ () => makeOrder(product) }/>
             </FooterContainer>
         </Wrapper>
     );

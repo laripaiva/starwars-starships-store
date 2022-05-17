@@ -39,21 +39,16 @@ const Home = ({navigation}: {navigation: any}) => {
 
     return (
         <Wrapper onScrollEndDrag={() => incrementPagination()} >
-            <ImageContainer>
+            {/* <ImageContainer>
                 <ImageUI source={require('../assets/images/banner.png')}/>
-            </ImageContainer>
-            {
-                products.length > 0 && (
-                    <Grid>
-                        {products.map((product, index) => 
-                            <Column key={index}> 
-                                <ProductCard onClick={ () => goToProductPage(product) } product={product}/>
-                            </Column>
-                        )}
-                    </Grid>
-                )
-            }
-                
+            </ImageContainer> */}
+            <Grid>
+                {products.map((product, index) => 
+                    <Column key={index}> 
+                        <ProductCard onClick={ () => goToProductPage(product) } product={product}/>
+                    </Column>
+                )}
+            </Grid>
             { loading && (<ActivityIndicator />)}
         </Wrapper>
     );
@@ -62,30 +57,31 @@ const Home = ({navigation}: {navigation: any}) => {
 const Wrapper = styled(ScrollView)`
     width: 100%;
     height: 100%;
-    backgroundColor: #F2F2F2;
+    background: #F2F2F2;
+    padding: 10px;
 `;
 
-const ImageContainer = styled(View)`
-    width: 100%;
-    height: 250px;
-    padding: 12px;
-    align-items: center;
-`;
+// const ImageContainer = styled(View)`
+//     width: 100%;
+//     max-height: 220px;
+//     padding: 0 10px;
+//     align-items: center;
+// `;
 
-const ImageUI = styled(Image)`
-    width: 100%;
-    height: 100%;
-    resize-mode: contain;
-`;
+// const ImageUI = styled(Image)`
+//     width: 100%;
+//     height: 100%;
+//     resize-mode: contain;
+// `;
 
 const Grid = styled(View)`
-    flexDirection: row;
-    flexWrap: wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
 `;
 
 const Column = styled(View)`
-    width: 46%;
-    margin: 2%;
+    width: 50%;
+    padding: 10px;
 `;
 
 export default Home;
